@@ -2,12 +2,14 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AuthProvider } from '@/components/AuthProvider'
+import { Toaster } from '@/components/ui/toaster'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'ZenSoul - A Mindful App',
-  description: 'A calming, privacy-first journaling web app with AI-powered insights and mental health resources.',
+  title: 'ZenSoul - AI-Powered Mental Wellness',
+  description: 'A comprehensive mental wellness app with AI-powered insights, voice conversations, and personalized support.',
 }
 
 export default function RootLayout({
@@ -17,10 +19,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <Script 
+          src="https://unpkg.com/@elevenlabs/convai-widget-embed" 
+          strategy="afterInteractive"
+          async 
+        />
+      </head>
       <body className={inter.className}>
         <AuthProvider>
           <ThemeProvider>
             {children}
+            <Toaster />
           </ThemeProvider>
         </AuthProvider>
       </body>

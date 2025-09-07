@@ -2,103 +2,167 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #dbeafe 0%, #fbcfe8 100%);
-  transition: background 1.2s;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply transition-colors duration-300;
+  }
 }
 
-/* Glassmorphism card for main content */
-.main-content,
-.AnxietyGuide,
-.App-header {
-  background: rgba(40, 44, 52, 0.76);
-  min-height: 70vh;
-  box-shadow: 0 8px 32px 0 rgba(120, 120, 180, 0.12);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(12px + 2vmin);
-  color: #fff;
-  backdrop-filter: blur(6px);
-  transition: background 1.2s;
+@layer utilities {
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
 }
 
-/* Floating shapes behind everything */
-.pointer-events-none {
-  pointer-events: none;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 /* Breathing circle animation */
 @keyframes glowPulse {
-  0%   { opacity: 0.66; box-shadow: 0 0 0 0 #a7f3d044, 0 0 60px 10px #a7f3d055, 0 0 120px 60px #a7f3d022;}
-  50%  { opacity: 0.93; box-shadow: 0 0 0 10px #a7f3d099, 0 0 80px 40px #a7f3d099, 0 0 220px 120px #a7f3d033;}
-  100% { opacity: 0.66; box-shadow: 0 0 0 0 #a7f3d044, 0 0 60px 10px #a7f3d055, 0 0 120px 60px #a7f3d022;}
+  0%   { 
+    opacity: 0.66; 
+    box-shadow: 0 0 0 0 currentColor, 0 0 60px 10px currentColor, 0 0 120px 60px currentColor;
+  }
+  50%  { 
+    opacity: 0.93; 
+    box-shadow: 0 0 0 10px currentColor, 0 0 80px 40px currentColor, 0 0 220px 120px currentColor;
+  }
+  100% { 
+    opacity: 0.66; 
+    box-shadow: 0 0 0 0 currentColor, 0 0 60px 10px currentColor, 0 0 120px 60px currentColor;
+  }
 }
 
 @keyframes floatNumber {
-  0%   { transform: translateY(16px) scale(0.98);}
-  50%  { transform: translateY(-6px) scale(1.08);}
-  100% { transform: translateY(0) scale(1);}
+  0%   { transform: translateY(16px) scale(0.98); }
+  50%  { transform: translateY(-6px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
 }
-.animate-floatNumber { animation: floatNumber 0.7s cubic-bezier(0.6,0,0.4,1); }
 
-/* Button styles */
-button,
-[type="button"] {
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+.animate-floatNumber { 
+  animation: floatNumber 0.7s cubic-bezier(0.6,0,0.4,1); 
 }
+
+.animate-glow {
+  animation: glowPulse 3s infinite;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full hover:bg-gray-400 dark:hover:bg-gray-500;
+}
+
+/* ElevenLabs widget styling */
+elevenlabs-convai {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+}
+
+/* Focus styles */
 button:focus-visible,
-[type="button"]:focus-visible {
-  outline: 2px solid #6366f1;
-  outline-offset: 2px;
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  @apply outline-none ring-2 ring-violet-500 ring-offset-2 dark:ring-offset-gray-800;
 }
 
-/* Chat bubble animation */
-@keyframes bounce {
-  0%, 20%, 53%, 80%, 100% {
-    transform: translate3d(0,0,0);
-  }
-  40%, 43% {
-    transform: translate3d(0, -8px, 0);
-  }
-  70% {
-    transform: translate3d(0, -4px, 0);
-  }
-  90% {
-    transform: translate3d(0, -2px, 0);
-  }
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
 }
 
-.chat-bubble {
-  animation: bounce 2s infinite;
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.chat-bubble:hover {
-  animation: none;
-  transform: scale(1.05);
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Typing indicator */
-@keyframes typing {
-  0%, 60%, 100% {
-    transform: translateY(0);
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
   }
-  30% {
-    transform: translateY(-10px);
+  100% {
+    background-position: calc(200px + 100%) 0;
   }
 }
 
-.typing-dot {
-  animation: typing 1.4s infinite ease-in-out;
+.shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
 }
 
-.typing-dot:nth-child(1) { animation-delay: -0.32s; }
-.typing-dot:nth-child(2) { animation-delay: -0.16s; }
-.typing-dot:nth-child(3) { animation-delay: 0s; }
+.shimmer-dark {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Improved button styles */
+.btn-primary {
+  @apply bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-violet-600 hover:to-purple-700 transform hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-semibold py-2 px-4 rounded-lg shadow hover:bg-gray-300 dark:hover:bg-gray-600 transform hover:scale-105 transition-all duration-200;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 transition-all duration-200 hover:shadow-xl;
+}
+
+.card-glass {
+  @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-xl border border-white/20 p-6 transition-all duration-200 hover:shadow-2xl;
+}
+
+/* Text styles */
+.text-gradient {
+  @apply bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent;
+}
+
+/* Animation delays for staggered effects */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
